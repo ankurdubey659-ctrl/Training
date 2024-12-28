@@ -1,9 +1,11 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-ltsc2022 AS base  # Windows-based
+# Use the Windows Server Core image for a Windows-based container
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-ltsc2022 AS base  
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-nanoserver-ltsc2022 AS build  # Windows-based
+# Use the Windows Server Core image for building the application
+FROM mcr.microsoft.com/dotnet/sdk:6.0-nanoserver-ltsc2022 AS build
 WORKDIR /src
 COPY ["AuthMicroService.csproj", "."]
 RUN dotnet restore "./AuthMicroService.csproj"
