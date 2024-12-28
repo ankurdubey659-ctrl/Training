@@ -22,7 +22,7 @@ namespace AuthMicroService.Controllers
         public IActionResult Login([FromBody] LoginModel login)
         {
             // Validate the user (in real scenario, you'd validate against a database)
-            if (login.Username == "user" && login.Password == "password")
+            if (login.Username == "admin" && login.Password == "password")
             {
                 var token = GenerateJwtToken();
                 return Ok(new { token });
