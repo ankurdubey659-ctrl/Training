@@ -35,7 +35,7 @@ namespace AuthMicroService.Controllers
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, "user123"),
+                new Claim(ClaimTypes.Name, "user12345"),
                 new Claim(ClaimTypes.Role, "Admin"),
             };
             var secretKey = _configuration["Jwt:SecretKey"];
