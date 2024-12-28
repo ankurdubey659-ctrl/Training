@@ -1,11 +1,14 @@
-# Use the Windows Server Core image for a Windows-based container
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-nanoserver-ltsc2022 AS base  
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
+#For more information, please see https://aka.ms/containercompat
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-# Use the Windows Server Core image for building the application
-FROM mcr.microsoft.com/dotnet/sdk:6.0-nanoserver-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["AuthMicroService.csproj", "."]
 RUN dotnet restore "./AuthMicroService.csproj"
