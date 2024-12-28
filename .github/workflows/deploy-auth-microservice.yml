@@ -1,0 +1,38 @@
+name: Build and Deploy AuthMicroService Docker Image to ACR
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Azure Container Registry (ACR)
+      - name: Log in to ACR
+        uses: docker/login-action@v2
+        with:
+          registry: azurecontainerdemo1.azurecr.io
+          username: ${{ secrets.AZURE_ACR_USERNAME }}
+          password: ${{ secrets.AZURE_ACR_PASSWORD }}
+
+      # Step 3: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t azurecontainerdemo1.azurecr.io/auth-microservice:latest AuthMicroService/AuthMicroService
+
+      # Step 4: Push the Docker image to Azure Container Registry (ACR)
+      - name: Push Docker image to ACR
+        run: |
+          docker push azurecontainerdemo1.azurecr.io/auth-microservice:latest
+
+      # Step 5: Logout from Docker registry
+      - name: Logout from Docker
+        run: |
+          docker logout azurecontainerdemo1.azurecr.io
